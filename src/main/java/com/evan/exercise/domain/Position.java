@@ -18,17 +18,9 @@ public class Position extends CanonicalObject implements UpdatablePosition {
         this.pointValidator = pointValidator;
     }
 
-    public int getX() {
-        return x;
-    }
-
     public Position setX(int x) {
         this.x = x;
         return this;
-    }
-
-    public int getY() {
-        return y;
     }
 
     public Position setY(int y) {
@@ -36,18 +28,32 @@ public class Position extends CanonicalObject implements UpdatablePosition {
         return this;
     }
 
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    @Override
     public void incrementY(int moveUnit) {
         updatePoint(this::setY, y + moveUnit);
     }
 
+    @Override
     public void decrementY(int moveUnit) {
         updatePoint(this::setY, y - moveUnit);
     }
 
+    @Override
     public void incrementX(int moveUnit) {
         updatePoint(this::setX, x + moveUnit);
     }
 
+    @Override
     public void decrementX(int moveUnit) {
         updatePoint(this::setX, x - moveUnit);
     }

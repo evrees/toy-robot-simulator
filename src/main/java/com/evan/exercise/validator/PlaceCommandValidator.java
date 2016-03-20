@@ -1,7 +1,7 @@
 package com.evan.exercise.validator;
 
 
-import com.evan.exercise.domain.enums.Facing;
+import com.evan.exercise.domain.enums.CardinalDirection;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class PlaceCommandValidator  {
     }
 
     private void validateDirection(String facing)  {
-        if (!isValidEnum(Facing.class, facing)) {
+        if (!isValidEnum(CardinalDirection.class, facing)) {
             throw invalidFacing();
         }
     }

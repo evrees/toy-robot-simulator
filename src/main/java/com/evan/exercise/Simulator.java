@@ -26,7 +26,7 @@ public class Simulator {
     }
 
     private void placeOnBoard(String placeCommand) {
-        MovableRobot robot = new PlaceCommand().attemptRobotPlacement(placeCommand);
+        MovableRobot robot = new PlaceCommand().placeRobot(placeCommand);
         commandAdapter = Optional.of(new CommandAdapter(robot));
     }
 

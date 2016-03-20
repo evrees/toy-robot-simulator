@@ -1,7 +1,5 @@
 package com.evan.exercise.domain;
 
-import com.evan.exercise.cardinaldirections.CardinalDirection;
-
 public interface MovableRobot {
     void move();
     void rotateLeft();
@@ -9,5 +7,5 @@ public interface MovableRobot {
     void report();
 
     UpdatablePosition getCurrentPosition();
-    CardinalDirection getCurrentCardinalDirection();
+    Facing getFacing();
 }

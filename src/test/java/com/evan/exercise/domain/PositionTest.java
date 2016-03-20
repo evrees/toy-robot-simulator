@@ -24,7 +24,7 @@ public class PositionTest {
 
     @Test
     public void setX_shouldReturnAPositionWithXSetTo_input() {
-        final int input = 3;
+        final int input = randomInt();
         SUBJECT = new Position()
                 .setX(input);
 
@@ -34,7 +34,7 @@ public class PositionTest {
 
     @Test
     public void setY_shouldReturnAPositionWithYSetTo_input() {
-        final int input = 2;
+        final int input = randomInt();
         SUBJECT = new Position()
                 .setY(input);
 
@@ -42,11 +42,10 @@ public class PositionTest {
         assertThat(actual, is(input));
     }
 
-
     @Test
-    public void moveNorth_shouldIncreaseYPointByOneMoveUnit() {
+    public void incrementY_shouldIncreaseYPointByOneMoveUnit() {
         final int moveUnit = randomInt();
-        final int input = 3;
+        final int input = randomInt();
         final int expectedResult = input + moveUnit;
         SUBJECT.setY(input);
 
@@ -58,9 +57,9 @@ public class PositionTest {
     }
 
     @Test
-    public void moveSouth_shouldDecreaseYPointByOneMoveUnit() {
+    public void decrementY_shouldDecreaseYPointByOneMoveUnit() {
         final int moveUnit = randomInt();
-        final int input = 2;
+        final int input = randomInt();;
         final int expectedResult = input - moveUnit;
         SUBJECT.setY(input);
 
@@ -72,9 +71,9 @@ public class PositionTest {
     }
 
     @Test
-    public void moveEast_shouldIncreaseXPointByOneMoveUnit() {
+    public void incrementX_shouldIncreaseXPointByOneMoveUnit() {
         final int moveUnit = randomInt();
-        final int input = 0;
+        final int input = randomInt();;
         final int expectedResult = input + moveUnit;
         SUBJECT.setX(input);
 
@@ -86,9 +85,9 @@ public class PositionTest {
     }
 
     @Test
-    public void moveWest_shouldDecreaseXPointByOneMoveUnit() {
+    public void decrementX_shouldDecreaseXPointByOneMoveUnit() {
         final int moveUnit = randomInt();
-        final int input = 1;
+        final int input = randomInt();;
         final int expectedResult = input - moveUnit;
         SUBJECT.setX(input);
 

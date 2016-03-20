@@ -1,10 +1,9 @@
 package com.evan.exercise.commands;
 
-import com.evan.exercise.cardinaldirections.South;
 import com.evan.exercise.domain.MovableRobot;
 import com.evan.exercise.domain.Position;
 import com.evan.exercise.domain.Robot;
-import com.evan.exercise.domain.enums.Facing;
+import com.evan.exercise.domain.enums.CardinalDirection;
 import com.evan.exercise.transformer.StringListToRobotTransformer;
 import com.evan.exercise.validator.PlaceCommandValidator;
 import org.junit.Before;
@@ -36,7 +35,7 @@ public class PlaceCommandTest {
     }
 
     @Test
-    public void attemptRobotPlacement_shouldReturnARobot() {
+    public void placeRobot_shouldReturnARobot() {
         final String place = "PLACE";
         final int x = randomInt();
         final int y = randomInt();
@@ -46,14 +45,14 @@ public class PlaceCommandTest {
 
         final MovableRobot expectedResult = new Robot()
                 .setCurrentPosition(new Position().setX(x).setY(y))
-                .setCurrentCardinalDirection(new South());
+                .setFacing(CardinalDirection.valueOf(facing));
 
         when(robotTransformer.createRobot(placeCommandParts)).thenReturn(expectedResult);
-        final MovableRobot actual = SUBJECT.attemptRobotPlacement(placeCommand);
+        final MovableRobot actual = SUBJECT.placeRobot(placeCommand);
 
         assertThat(actual.getCurrentPosition().getX(), is(x));
         assertThat(actual.getCurrentPosition().getY(), is(y));
-        assertThat(actual.getCurrentCardinalDirection().getFacing(), is(Facing.SOUTH));
+        assertThat(actual.getFacing(), is(CardinalDirection.SOUTH));
     }
 
 }

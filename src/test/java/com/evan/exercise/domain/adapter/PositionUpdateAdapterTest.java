@@ -1,7 +1,7 @@
 package com.evan.exercise.domain.adapter;
 
 import com.evan.exercise.domain.Position;
-import com.evan.exercise.domain.enums.Facing;
+import com.evan.exercise.domain.enums.CardinalDirection;
 import com.evan.exercise.validator.PointValidator;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class PositionUpdateAdapterTest {
 
     @Test
     public void moveInCurrentDirection_shouldIncrementY_whenFacingIsNorth() {
-        final Facing facing = Facing.NORTH;
+        final CardinalDirection facing = CardinalDirection.NORTH;
         final int startingY = randomInt();
         final int expectedResult = startingY + MOVE_UNIT;
         final Position currentPosition = new Position(pointValidator).setY(startingY);
@@ -40,7 +40,7 @@ public class PositionUpdateAdapterTest {
 
     @Test
     public void moveInCurrentDirection_shouldDecrementY_whenFacingIsSouth() {
-        final Facing facing = Facing.SOUTH;
+        final CardinalDirection facing = CardinalDirection.SOUTH;
         final int startingY = randomInt();
         final int expectedResult = startingY - MOVE_UNIT;
         final Position currentPosition = new Position(pointValidator).setY(startingY);
@@ -54,7 +54,7 @@ public class PositionUpdateAdapterTest {
 
     @Test
     public void moveInCurrentDirection_shouldIncrementX_whenFacingIsEast() {
-        final Facing facing = Facing.EAST;
+        final CardinalDirection facing = CardinalDirection.EAST;
         final int startingX = randomInt();
         final int expectedResult = startingX + MOVE_UNIT;
         final Position currentPosition = new Position(pointValidator).setX(startingX);
@@ -68,7 +68,7 @@ public class PositionUpdateAdapterTest {
 
     @Test
     public void moveInCurrentDirection_shouldDecrementX_whenFacingIsWest() {
-        final Facing facing = Facing.WEST;
+        final CardinalDirection facing = CardinalDirection.WEST;
         final int startingX = randomInt();
         final int expectedResult = startingX - MOVE_UNIT;
         final Position currentPosition = new Position(pointValidator).setX(startingX);

@@ -12,8 +12,8 @@ public class CommandAdapter {
     }
 
     public void process(String command) {
-        final AvailableCommand requestCommand = AvailableCommand.valueOf(command);
-        switch (requestCommand) {
+        final AvailableCommand requestedCommand = AvailableCommand.valueOf(command);
+        switch (requestedCommand) {
             case MOVE:
                 robot.move();
                 break;

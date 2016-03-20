@@ -1,7 +1,7 @@
 package com.evan.exercise
 
 import com.evan.exercise.domain.Robot
-import com.evan.exercise.domain.enums.Facing
+import com.evan.exercise.domain.enums.CardinalDirection
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -9,7 +9,7 @@ class SimulatorSpec extends Specification {
 
     final Simulator SUBJECT = new Simulator()
 
-    def 'process should not create a Robot.BoardLocation when Place Command is not present'() {
+    def 'process should not create a CommandAdapter when Place Command is not present'() {
         given:
         def commands = commandsWithoutPlacement();
 
@@ -22,7 +22,7 @@ class SimulatorSpec extends Specification {
 
 
     @Unroll('Position: #expectedX, #expectedY. Facing: #expectedFacing')
-    def 'process should create a completed Robot.BoardLocation when commands are valid'() {
+    def 'process should create a completed CommandAdapter with Robot when commands are valid'() {
         when:
         SUBJECT.process(commands);
 
@@ -30,15 +30,15 @@ class SimulatorSpec extends Specification {
         Robot actual = SUBJECT.commandAdapter.get().robot
         assert actual.currentPosition.getX() == expectedX;
         assert actual.currentPosition.getY() == expectedY;
-        assert actual.currentCardinalDirection.facing == expectedFacing;
+        assert actual.facing == expectedFacing;
 
         where:
         commands                    | expectedX | expectedY | expectedFacing
-        basicCommandList()          | 1         | 1         | Facing.EAST
-        complexCommandList()        | 3         | 2         | Facing.SOUTH
-        testMaxBoundaryCommands()   | 4         | 4         | Facing.EAST
-        testMinBoundaryCommands()   | 0         | 0         | Facing.SOUTH
-        firstPlacementOverwritten() | 4         | 4         | Facing.WEST;
+        basicCommandList()          | 1         | 1         | CardinalDirection.EAST
+        complexCommandList()        | 3         | 2         | CardinalDirection.SOUTH
+        testMaxBoundaryCommands()   | 4         | 4         | CardinalDirection.EAST
+        testMinBoundaryCommands()   | 0         | 0         | CardinalDirection.SOUTH
+        firstPlacementOverwritten() | 4         | 4         | CardinalDirection.WEST;
     }
 
     def commandsWithoutPlacement() {

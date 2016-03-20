@@ -21,7 +21,7 @@ public class PlaceCommand {
         this.placeCommandValidator = placeCommandValidator;
     }
 
-    public MovableRobot attemptRobotPlacement(String command) {
+    public MovableRobot placeRobot(String command) {
         final List<String> placeCommandParts = Arrays.asList(command.split("\\,| "));
         placeCommandValidator.validate(placeCommandParts);
         return robotTransformer.createRobot(placeCommandParts);

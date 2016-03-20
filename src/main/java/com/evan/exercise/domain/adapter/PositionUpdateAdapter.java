@@ -1,7 +1,7 @@
 package com.evan.exercise.domain.adapter;
 
 import com.evan.exercise.domain.Position;
-import com.evan.exercise.domain.enums.Facing;
+import com.evan.exercise.domain.enums.CardinalDirection;
 
 import static com.evan.exercise.exception.RobotSimulatorException.invalidFacing;
 
@@ -13,7 +13,7 @@ public class PositionUpdateAdapter {
         this.moveUnit = moveUnit;
     }
 
-    public void moveInCurrentDirection(Position currentPosition, Facing facing) {
+    public void moveInCurrentDirection(Position currentPosition, CardinalDirection facing) {
         switch (facing) {
             case NORTH:
                 currentPosition.incrementY(moveUnit);

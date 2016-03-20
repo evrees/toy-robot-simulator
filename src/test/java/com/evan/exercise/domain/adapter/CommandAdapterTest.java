@@ -1,10 +1,10 @@
 package com.evan.exercise.domain.adapter;
 
-import com.evan.exercise.cardinaldirections.East;
+import com.evan.exercise.domain.Facing;
 import com.evan.exercise.domain.MovableRobot;
 import com.evan.exercise.domain.Position;
 import com.evan.exercise.domain.Robot;
-import com.evan.exercise.domain.enums.Facing;
+import com.evan.exercise.domain.enums.CardinalDirection;
 import com.evan.exercise.validator.PointValidator;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,8 +33,8 @@ public class CommandAdapterTest {
 
         when(pointValidator.isPointWithinTableBounds(expectedResult)).thenReturn(true);
         robot = new Robot()
-                .setCurrentCardinalDirection(new East())
-                .setCurrentPosition(new Position(pointValidator).setX(startingX));
+                .setCurrentPosition(new Position(pointValidator).setX(startingX))
+                .setFacing(CardinalDirection.EAST);
 
         SUBJECT = new CommandAdapter(robot);
         SUBJECT.process("MOVE");
@@ -46,25 +46,25 @@ public class CommandAdapterTest {
     @Test
     public void process_shouldRotateRobotOneCardinalDirectionLeft_whenCommandIsLeft() {
         robot = new Robot()
-                .setCurrentCardinalDirection(new East());
+                .setFacing(CardinalDirection.EAST);
 
         SUBJECT = new CommandAdapter(robot);
         SUBJECT.process("LEFT");
 
-        final Facing actual = robot.getCurrentCardinalDirection().getFacing();
-        assertThat(actual, is(Facing.NORTH));
+        final Facing actual = robot.getFacing();
+        assertThat(actual, is(CardinalDirection.NORTH));
     }
 
     @Test
     public void process_shouldRotateRobotOneCardinalDirectionRight_whenCommandIsRight() {
         robot = new Robot()
-                .setCurrentCardinalDirection(new East());
+                .setFacing(CardinalDirection.EAST);
 
         SUBJECT = new CommandAdapter(robot);
         SUBJECT.process("RIGHT");
 
-        final Facing actual = robot.getCurrentCardinalDirection().getFacing();
-        assertThat(actual, is(Facing.SOUTH));
+        final Facing actual = robot.getFacing();
+        assertThat(actual, is(CardinalDirection.SOUTH));
     }
 
 }
