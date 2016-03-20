@@ -1,0 +1,19 @@
+.idea/
+.gradle
+build/
+log/
+classes/
+marshall-publish.iml
+out/
+.DS_Store
+lastcheckdate
+src/main/resources/config/application-local.properties
+gradle-wrapper.properties
+testfile
+# Ignore Gradle GUI config
+gradle-app.setting
+
+*.iml
+*.ipr
+*.iws
+
