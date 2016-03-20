@@ -19,19 +19,19 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
-public class PlaceCommandTest {
+public class RobotPlacerTest {
 
 
     private PlaceCommandValidator placeCommandValidator;
     private StringListToRobotTransformer robotTransformer;
-    private PlaceCommand SUBJECT;
+    private RobotPlacer SUBJECT;
 
     @Before
     public void setUp() {
         robotTransformer = Mockito.mock(StringListToRobotTransformer.class);
         placeCommandValidator = Mockito.mock(PlaceCommandValidator.class);
 
-        SUBJECT = new PlaceCommand(robotTransformer, placeCommandValidator);
+        SUBJECT = new RobotPlacer(robotTransformer, placeCommandValidator);
     }
 
     @Test

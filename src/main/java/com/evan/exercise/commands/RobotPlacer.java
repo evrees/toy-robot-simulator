@@ -7,16 +7,16 @@ import com.evan.exercise.validator.PlaceCommandValidator;
 import java.util.Arrays;
 import java.util.List;
 
-public class PlaceCommand {
+public class RobotPlacer {
 
     private final StringListToRobotTransformer robotTransformer;
     private final PlaceCommandValidator placeCommandValidator;
 
-    public PlaceCommand() {
+    public RobotPlacer() {
         this(new StringListToRobotTransformer(), new PlaceCommandValidator());
     }
 
-    public PlaceCommand(StringListToRobotTransformer robotTransformer, PlaceCommandValidator placeCommandValidator) {
+    public RobotPlacer(StringListToRobotTransformer robotTransformer, PlaceCommandValidator placeCommandValidator) {
         this.robotTransformer = robotTransformer;
         this.placeCommandValidator = placeCommandValidator;
     }

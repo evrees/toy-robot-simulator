@@ -1,5 +1,6 @@
 package com.evan.exercise.domain.adapter;
 
+import com.evan.exercise.commands.RobotPlacer;
 import com.evan.exercise.domain.Facing;
 import com.evan.exercise.domain.MovableRobot;
 import com.evan.exercise.domain.Position;
@@ -18,25 +19,31 @@ import static org.mockito.Mockito.when;
 public class CommandAdapterTest {
 
     private PointValidator pointValidator;
+    private RobotPlacer robotPlacer;
     private MovableRobot robot;
     private CommandAdapter SUBJECT;
 
     @Before
     public void setUp() {
         pointValidator = Mockito.mock(PointValidator.class);
+        robotPlacer = Mockito.mock(RobotPlacer.class);
+        SUBJECT = new CommandAdapter(robotPlacer);
     }
 
     @Test
     public void process_shouldMoveRobotOneUnitInCurrentDirection_whenCommandIsMove() {
         final int startingX = randomInt();
         final int expectedResult = startingX + Robot.MOVE_UNIT;
+        final String placeCommand = String.format("%s,%s,%s,%s", "PLACE", startingX, 1, "EAST");
 
-        when(pointValidator.isPointWithinTableBounds(expectedResult)).thenReturn(true);
         robot = new Robot()
                 .setCurrentPosition(new Position(pointValidator).setX(startingX))
                 .setFacing(CardinalDirection.EAST);
 
-        SUBJECT = new CommandAdapter(robot);
+        when(robotPlacer.placeRobot(placeCommand)).thenReturn(robot);
+        when(pointValidator.isPointWithinTableBounds(expectedResult)).thenReturn(true);
+
+        SUBJECT.placeOnBoard(placeCommand);
         SUBJECT.process("MOVE");
 
         final int actual = robot.getCurrentPosition().getX();
@@ -45,10 +52,12 @@ public class CommandAdapterTest {
 
     @Test
     public void process_shouldRotateRobotOneCardinalDirectionLeft_whenCommandIsLeft() {
+        final String placeCommand = String.format("%s,%s,%s,%s", "PLACE", 1, 1, "EAST");
         robot = new Robot()
                 .setFacing(CardinalDirection.EAST);
 
-        SUBJECT = new CommandAdapter(robot);
+        when(robotPlacer.placeRobot(placeCommand)).thenReturn(robot);
+        SUBJECT.placeOnBoard(placeCommand);
         SUBJECT.process("LEFT");
 
         final Facing actual = robot.getFacing();
@@ -57,10 +66,12 @@ public class CommandAdapterTest {
 
     @Test
     public void process_shouldRotateRobotOneCardinalDirectionRight_whenCommandIsRight() {
+        final String placeCommand = String.format("%s,%s,%s,%s", "PLACE", 1, 1, "EAST");
         robot = new Robot()
                 .setFacing(CardinalDirection.EAST);
 
-        SUBJECT = new CommandAdapter(robot);
+        when(robotPlacer.placeRobot(placeCommand)).thenReturn(robot);
+        SUBJECT.placeOnBoard(placeCommand);
         SUBJECT.process("RIGHT");
 
         final Facing actual = robot.getFacing();

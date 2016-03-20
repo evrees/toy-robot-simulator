@@ -9,7 +9,7 @@ class SimulatorSpec extends Specification {
 
     final Simulator SUBJECT = new Simulator()
 
-    def 'process should not create a CommandAdapter when Place Command is not present'() {
+    def 'process should not create a Robot when Place Command is not present'() {
         given:
         def commands = commandsWithoutPlacement();
 
@@ -17,17 +17,18 @@ class SimulatorSpec extends Specification {
         SUBJECT.process(commands);
 
         then:
-        assert SUBJECT.commandAdapter.isPresent() == false;
+        assert SUBJECT.commandAdapter.hasRobotBeenPlaced() == false;
     }
 
 
     @Unroll('Position: #expectedX, #expectedY. Facing: #expectedFacing')
-    def 'process should create a completed CommandAdapter with Robot when commands are valid'() {
+    def 'process should create a completed Robot when commands are valid'() {
         when:
         SUBJECT.process(commands);
 
         then:
-        Robot actual = SUBJECT.commandAdapter.get().robot
+        Optional<Robot> robot = SUBJECT.commandAdapter.robot
+        Robot actual = robot.get()
         assert actual.currentPosition.getX() == expectedX;
         assert actual.currentPosition.getY() == expectedY;
         assert actual.facing == expectedFacing;
