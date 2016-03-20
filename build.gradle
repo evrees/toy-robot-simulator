@@ -1,0 +1,110 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "org.codehaus.groovy:groovy-backports-compat23:${groovyVersion}"
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+//Clean, build and run by default
+defaultTasks 'clean', 'run'
+
+ext {
+    buildNumber = System.properties['build'] ?: 'development'
+}
+
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+idea {
+    module {
+        inheritOutputDirs = true
+        downloadSources = true
+    }
+}
+
+sourceSets {
+    test {
+        groovy {
+            srcDirs = ['src/test/functional', 'src/test/groovy']
+        }
+    }
+}
+
+processResources {
+    filesMatching('**/*.properties') {
+        filter ReplaceTokens, tokens: [buildNumber: buildNumber]
+    }
+}
+
+
+dependencies {
+    compile 'org.apache.commons:commons-io:1.3.2'
+    compile "org.apache.commons:commons-lang3:${commonsLang3Version}"
+    compile "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
+
+
+    compile 'org.jsoup:jsoup:1.8.3'
+
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.boot:spring-boot-starter-aop'
+    compile('org.springframework.boot:spring-boot-starter-data-jpa') {
+        exclude module: 'tomcat-jdbc'
+    }
+    compile 'org.springframework.boot:spring-boot-starter-logging'
+    compile 'org.springframework.integration:spring-integration-mail'
+    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    compile "org.jooq:jool:${joolVersion}"
+
+
+    // Test
+    testCompile "commons-lang:commons-lang:${commonsLangVersion}"
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    testCompile "org.spockframework:spock-core:${spockVersion}"
+    testCompile "org.spockframework:spock-spring:${spockVersion}"
+    testCompile 'cglib:cglib:3.2.0'
+}
+
+task packageDistribution(type: Zip, dependsOn: build) {
+
+    from("$buildDir/libs") {
+        include("*.jar")
+    }
+    from('config') {
+        into('config')
+    }
+    from('scripts') {
+        into('scripts')
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.11'
+}
+
+//publish.shouldRunAfter packageDistribution
+//
+//task cibuild(dependsOn: [build, publish])

@@ -1,0 +1,13 @@
+Compile: Use Gradle to build and run tests: gradle clean build
+or ./scripts/compile.sh
+
+Run:
+./scripts/run.sh <input-file>
+
+Where <input-file> is a file with a list of commands,
+e.g: src/main/resources/sample-A.txt
+
+
+
+
+
