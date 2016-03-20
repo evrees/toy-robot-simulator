@@ -16,13 +16,13 @@ public class RobotPlacer {
         this(new StringListToRobotTransformer(), new PlaceCommandValidator());
     }
 
-    public RobotPlacer(StringListToRobotTransformer robotTransformer, PlaceCommandValidator placeCommandValidator) {
+    RobotPlacer(StringListToRobotTransformer robotTransformer, PlaceCommandValidator placeCommandValidator) {
         this.robotTransformer = robotTransformer;
         this.placeCommandValidator = placeCommandValidator;
     }
 
     public MovableRobot placeRobot(String command) {
-        final List<String> placeCommandParts = Arrays.asList(command.split("\\,| "));
+        final List<String> placeCommandParts = Arrays.asList(command.split(",| "));
         placeCommandValidator.validate(placeCommandParts);
         return robotTransformer.createRobot(placeCommandParts);
     }

@@ -7,34 +7,39 @@ import com.evan.exercise.domain.Position;
 import com.evan.exercise.domain.Robot;
 import com.evan.exercise.domain.enums.CardinalDirection;
 import com.evan.exercise.validator.PointValidator;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static com.evan.exercise.test.util.RandomUtil.randomInt;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CommandAdapterTest {
 
+    @Mock
     private PointValidator pointValidator;
-    private RobotPlacer robotPlacer;
-    private MovableRobot robot;
-    private CommandAdapter SUBJECT;
 
-    @Before
-    public void setUp() {
-        pointValidator = Mockito.mock(PointValidator.class);
-        robotPlacer = Mockito.mock(RobotPlacer.class);
-        SUBJECT = new CommandAdapter(robotPlacer);
-    }
+    @Mock
+    private RobotPlacer robotPlacer;
+
+    @InjectMocks
+    private CommandAdapter subject;
+
+    private MovableRobot robot;
+
+
 
     @Test
     public void process_shouldMoveRobotOneUnitInCurrentDirection_whenCommandIsMove() {
+        //Given:
         final int startingX = randomInt();
         final int expectedResult = startingX + Robot.MOVE_UNIT;
-        final String placeCommand = String.format("%s,%s,%s,%s", "PLACE", startingX, 1, "EAST");
+        final String placeCommand = String.format("%s %s,%s,%s", "PLACE",  startingX, 1, "EAST");
 
         robot = new Robot()
                 .setCurrentPosition(new Position(pointValidator).setX(startingX))
@@ -43,37 +48,42 @@ public class CommandAdapterTest {
         when(robotPlacer.placeRobot(placeCommand)).thenReturn(robot);
         when(pointValidator.isPointWithinTableBounds(expectedResult)).thenReturn(true);
 
-        SUBJECT.placeOnBoard(placeCommand);
-        SUBJECT.process("MOVE");
+        subject.placeOnBoard(placeCommand);
+        subject.process("MOVE");
 
+        //then:
         final int actual = robot.getCurrentPosition().getX();
         assertThat(actual, is(expectedResult));
     }
 
     @Test
     public void process_shouldRotateRobotOneCardinalDirectionLeft_whenCommandIsLeft() {
-        final String placeCommand = String.format("%s,%s,%s,%s", "PLACE", 1, 1, "EAST");
+        //Given:
+        final String placeCommand = String.format("%s %s,%s,%s", "PLACE", 1, 1, "EAST");
         robot = new Robot()
                 .setFacing(CardinalDirection.EAST);
 
         when(robotPlacer.placeRobot(placeCommand)).thenReturn(robot);
-        SUBJECT.placeOnBoard(placeCommand);
-        SUBJECT.process("LEFT");
+        subject.placeOnBoard(placeCommand);
+        subject.process("LEFT");
 
+        //then:
         final Facing actual = robot.getFacing();
         assertThat(actual, is(CardinalDirection.NORTH));
     }
 
     @Test
     public void process_shouldRotateRobotOneCardinalDirectionRight_whenCommandIsRight() {
-        final String placeCommand = String.format("%s,%s,%s,%s", "PLACE", 1, 1, "EAST");
+        //Given:
+        final String placeCommand = String.format("%s %s,%s,%s", "PLACE", 1, 1, "EAST");
         robot = new Robot()
                 .setFacing(CardinalDirection.EAST);
 
         when(robotPlacer.placeRobot(placeCommand)).thenReturn(robot);
-        SUBJECT.placeOnBoard(placeCommand);
-        SUBJECT.process("RIGHT");
+        subject.placeOnBoard(placeCommand);
+        subject.process("RIGHT");
 
+        //then;
         final Facing actual = robot.getFacing();
         assertThat(actual, is(CardinalDirection.SOUTH));
     }

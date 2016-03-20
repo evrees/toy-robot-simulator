@@ -13,7 +13,7 @@ public class ApplicationTest {
     @Test
     public void main_shouldThrowException_whenArgsIsEmpty() {
         exception.expect(RobotSimulatorException.class);
-        exception.expectMessage(RobotSimulatorException.NO_FILE_PROVIDED);
+        exception.expectMessage(Application.NO_FILE_PROVIDED);
         final String[] emptyArray = {};
         Application.main(emptyArray);
     }

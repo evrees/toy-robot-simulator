@@ -3,7 +3,6 @@ package com.evan.exercise.exception;
 
 public class RobotSimulatorException extends RuntimeException {
 
-    public static final String NO_FILE_PROVIDED = "No file location provided";
     public static final String INVALID_PLACE_COMMAND = "Invalid Place command line. please use format of PLACE X,Y,FACING";
     public static final String INVALID_FACING = "Invalid Facing";
     public static final String INVALID_X = "Invalid X Point";
@@ -32,10 +31,5 @@ public class RobotSimulatorException extends RuntimeException {
     public static RobotSimulatorException invalidY() {
         return new RobotSimulatorException(INVALID_Y);
     }
-
-    public static RobotSimulatorException noInput() {
-        return new RobotSimulatorException(NO_FILE_PROVIDED);
-    }
-
 
 }

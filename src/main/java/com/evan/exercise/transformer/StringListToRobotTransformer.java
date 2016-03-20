@@ -17,7 +17,7 @@ public class StringListToRobotTransformer {
         this(new StringListToPositionTransformer());
     }
 
-    public StringListToRobotTransformer(  StringListToPositionTransformer stringListToPositionTransformer) {
+    StringListToRobotTransformer(StringListToPositionTransformer stringListToPositionTransformer) {
         this.stringListToPositionTransformer = stringListToPositionTransformer;
     }
 

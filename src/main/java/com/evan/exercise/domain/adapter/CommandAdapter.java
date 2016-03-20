@@ -15,7 +15,7 @@ public class CommandAdapter {
         robotPlacer = new RobotPlacer();
     }
 
-    public CommandAdapter(RobotPlacer robotPlacer) {
+    CommandAdapter(RobotPlacer robotPlacer) {
         this.robotPlacer = robotPlacer;
     }
 
@@ -28,8 +28,12 @@ public class CommandAdapter {
     }
 
     public void process(String command) {
-        final AvailableCommand requestedCommand = AvailableCommand.valueOf(command);
+        if (hasRobotBeenPlaced()) {
+            actionCommand(AvailableCommand.valueOf(command));
+        }
+    }
 
+    private void actionCommand(AvailableCommand requestedCommand) {
         switch (requestedCommand) {
             case MOVE:
                 robot.get().move();
@@ -44,7 +48,7 @@ public class CommandAdapter {
                 robot.get().report();
                 break;
             default:
-                throw new IllegalArgumentException(command + " is not an available command");
+                throw new IllegalArgumentException(requestedCommand + " is not an available command");
         }
     }
 

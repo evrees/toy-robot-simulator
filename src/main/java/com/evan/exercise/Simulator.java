@@ -14,7 +14,7 @@ public class Simulator {
         commands.forEach(this::processCommand);
     }
 
-    public void processCommand(String command) {
+    private void processCommand(String command) {
         if (command.startsWith(PLACE.name())) {
             commandAdapter.placeOnBoard(command);
         } else {
