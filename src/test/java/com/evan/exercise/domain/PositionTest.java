@@ -1,5 +1,6 @@
 package com.evan.exercise.domain;
 
+
 import com.evan.exercise.validator.PointValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;

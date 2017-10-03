@@ -5,7 +5,6 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath "org.codehaus.groovy:groovy-backports-compat23:${groovyVersion}"
     }
 }
@@ -14,7 +13,6 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: 'spring-boot'
 apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
@@ -65,27 +63,17 @@ dependencies {
 
     compile 'org.jsoup:jsoup:1.8.3'
 
-    compile 'org.springframework.boot:spring-boot-starter-actuator'
-    compile 'org.springframework.boot:spring-boot-starter-aop'
-    compile('org.springframework.boot:spring-boot-starter-data-jpa') {
-        exclude module: 'tomcat-jdbc'
-    }
-    compile 'org.springframework.boot:spring-boot-starter-logging'
-    compile 'org.springframework.integration:spring-integration-mail'
-    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
-
     compile "org.jooq:jool:${joolVersion}"
 
 
     // Test
     testCompile "commons-lang:commons-lang:${commonsLangVersion}"
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile "org.codehaus.groovy:groovy-all:${groovyVersion}"
     testCompile "org.spockframework:spock-core:${spockVersion}"
-    testCompile "org.spockframework:spock-spring:${spockVersion}"
     testCompile 'cglib:cglib:3.2.0'
+    testCompile 'junit:junit:4.11'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
+
 }
 
 task packageDistribution(type: Zip, dependsOn: build) {
